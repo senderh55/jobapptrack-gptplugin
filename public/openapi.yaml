@@ -1,29 +1,102 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
-  title: TODO Plugin
-  description: A plugin that allows the user to create and manage a TODO list using ChatGPT.
-  version: "v1"
+  title: Job Application Plugin
+  description: A plugin that allows users to manage job applications.
+  version: "1.0.0"
 servers:
-  - url: http://localhost:3333
+  - url: http://localhost:3000
 paths:
-  /todos:
-    get:
-      operationId: getTodos
-      summary: Get the list of todos
+  /api/add-job-app:
+    post:
+      operationId: addJobApplication
+      summary: Add a new job application
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/addJobApplication"
       responses:
         "200":
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/getTodosResponse"
+
+  /api/delete-job-app:
+    post:
+      operationId: deleteJobApplication
+      summary: Delete a job application
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/deleteJobApplication"
+      responses:
+        "200":
+          description: OK
+
+  /api/edit-job-app:
+    post:
+      operationId: editJobApplication
+      summary: Edit a job application
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/editJobApplication"
+      responses:
+        "200":
+          description: OK
+
+  /api/show-job-app:
+    post:
+      operationId: showJobApplication
+      summary: Show a job application
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/showJobApplication"
+      responses:
+        "200":
+          description: OK
+
 components:
   schemas:
-    getTodosResponse:
+    addJobApplication:
       type: object
+      required:
+        - jobApplication
       properties:
-        todos:
-          type: array
-          items:
-            type: string
-          description: The list of todos.
+        jobApplication:
+          type: string
+          description: The job application to add to the list.
+          required: true
+    deleteJobApplication:
+      type: object
+      required:
+        - jobApplication
+      properties:
+        jobApplication:
+          type: string
+          description: The job application to delete from the list.
+          required: true
+    editJobApplication:
+      type: object
+      required:
+        - jobApplication
+      properties:
+        jobApplication:
+          type: string
+          description: The job application to edit in the list.
+          required: true
+    showJobApplication:
+      type: object
+      required:
+        - jobApplication
+      properties:
+        jobApplication:
+          type: string
+          description: The job application to show in the list.
+          required: true

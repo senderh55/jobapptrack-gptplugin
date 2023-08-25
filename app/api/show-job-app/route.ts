@@ -1,11 +1,12 @@
-import { NextResponse } from "next/server";
-import { getJobApplications } from "@/lib/jobApplicationUtils";
+import { NextResponse, NextRequest } from "next/server";
+import { editJobApplication } from "@/lib/jobApplicationUtils";
 
-export async function GET() {
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  console.log("body: ", body);
+  editJobApplication(body);
   return NextResponse.json(
-    {
-      getJobApplications: getJobApplications(),
-    },
+    { success: true },
     {
       status: 200,
       headers: {
