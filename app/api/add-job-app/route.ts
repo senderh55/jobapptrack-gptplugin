@@ -1,5 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import { createJobApplication } from "@/lib/jobApplicationUtils";
+import commonHeaders from "@/lib/commonHeaders";
 
 export async function POST(req: NextRequest) {
   const { json } = req;
@@ -11,12 +12,7 @@ export async function POST(req: NextRequest) {
     { success: true },
     {
       status: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "https://chat.openai.com",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers":
-          "Content-Type, Authorization, openai-ephemeral-user-id, openai-conversation-id",
-      },
+      headers: commonHeaders,
     }
   );
 }
@@ -27,12 +23,7 @@ export async function OPTIONS() {
     {},
     {
       status: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "https://chat.openai.com",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers":
-          "Content-Type, Authorization, openai-ephemeral-user-id, openai-conversation-id",
-      },
+      headers: commonHeaders,
     }
   );
 }

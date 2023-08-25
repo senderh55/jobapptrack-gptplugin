@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { loadJobApplications } from "@/lib/jobApplicationUtils";
+import commonHeaders from "@/lib/commonHeaders";
 
 // FIXME
 export const GET = async () => {
@@ -14,12 +15,7 @@ export const GET = async () => {
       },
       {
         status: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "https://chat.openai.com",
-          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-          "Access-Control-Allow-Headers":
-            "Content-Type, Authorization, openai-ephemeral-user-id, openai-conversation-id",
-        },
+        headers: commonHeaders,
       }
     );
   } catch (error) {
@@ -40,12 +36,7 @@ export async function OPTIONS() {
     {},
     {
       status: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "https://chat.openai.com",
-        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers":
-          "Content-Type, Authorization, openai-ephemeral-user-id, openai-conversation-id",
-      },
+      headers: commonHeaders,
     }
   );
 }
