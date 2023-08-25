@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Job Application Tracker Plugin",
+  "name_for_model": "jobapp",
+  "description_for_human": "Track and manage job applications. Add, update,delete and view job applications.",
+  "description_for_model": "Assist the user in tracking and managing job applications. You can add, update,delete and view applications.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "http://localhost:3000/openapi.yaml",
+    "is_user_authenticated": false
+  },
+  "logo_url": "http://localhost:3000/logo.png",
+  "contact_email": "support@example.com",
+  "legal_info_url": "https://example.com/legal"
+}
