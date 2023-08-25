@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { deleteJobApplication } from "@/lib/jobApplicationUtils";
 
-export async function POST(req: NextRequest) {
+export async function DELETE(req: NextRequest) {
   const body = await req.json();
   console.log("body: ", body);
   deleteJobApplication(body);

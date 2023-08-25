@@ -5,7 +5,7 @@ import {
 import { loadApplicationsFromCSV, updateCSVFile } from "./csvUtils";
 
 let jobApplications: JobApplicationsType = [];
-
+// FIXME
 async function loadJobApplications() {
   try {
     jobApplications = await loadApplicationsFromCSV();
@@ -18,10 +18,6 @@ async function loadJobApplications() {
 async function createJobApplication(application: JobApplication) {
   jobApplications.push(application);
   await updateCSVFile(jobApplications);
-}
-
-function getJobApplications(): JobApplicationsType {
-  return jobApplications;
 }
 
 function editJobApplication(application: JobApplication) {
@@ -47,7 +43,6 @@ function deleteJobApplication(application: JobApplication) {
 export {
   loadJobApplications,
   createJobApplication,
-  getJobApplications,
   editJobApplication,
   deleteJobApplication,
 };

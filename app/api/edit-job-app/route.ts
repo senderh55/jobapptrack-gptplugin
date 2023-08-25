@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { editJobApplication } from "@/lib/jobApplicationUtils";
 
-export async function POST(req: NextRequest) {
+export async function PUT(req: NextRequest) {
   const body = await req.json();
   console.log("body: ", body);
   editJobApplication(body);
