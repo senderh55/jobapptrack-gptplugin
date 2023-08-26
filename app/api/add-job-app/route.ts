@@ -4,7 +4,6 @@ import commonHeaders from "@/lib/commonHeaders";
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  console.log(body);
   createJobApplication(body);
   const { json: jsonResponse } = NextResponse;
   return jsonResponse(

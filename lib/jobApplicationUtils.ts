@@ -5,7 +5,6 @@ import {
 import {
   loadApplicationsFromCSV,
   deleteJobApplicationByCompany,
-  editJobApplicationByCompany,
   addJobApplicationToCSV,
 } from "./csvUtils";
 
@@ -44,7 +43,8 @@ async function deleteJobApplication(application: JobApplication) {
 async function editJobApplication(application: JobApplication) {
   const companyName = extractCompanyName(application);
   if (companyName) {
-    await editJobApplicationByCompany(companyName, application);
+    await deleteJobApplicationByCompany(companyName);
+    await addJobApplicationToCSV(application["jobApplication"].trim());
   } else {
     console.log("Company name not found");
   }

@@ -86,29 +86,9 @@ async function deleteJobApplicationByCompany(
   }
 }
 
-async function editJobApplicationByCompany(
-  companyName: string,
-  newData: JobApplication
-): Promise<void> {
-  try {
-    const applications = await loadApplicationsFromCSV();
-    const editedApplications = applications.map((application) =>
-      application.Company === companyName
-        ? { ...application, ...newData }
-        : application
-    );
-    console.log(editedApplications);
-    await updateCSVFile(editedApplications);
-    console.log(`Job application for '${companyName}' edited successfully`);
-  } catch (error) {
-    throw error;
-  }
-}
-
 export {
   loadApplicationsFromCSV,
   updateCSVFile,
   addJobApplicationToCSV,
   deleteJobApplicationByCompany,
-  editJobApplicationByCompany,
 };
