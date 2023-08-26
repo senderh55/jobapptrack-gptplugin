@@ -3,9 +3,8 @@ import { createJobApplication } from "@/lib/jobApplicationUtils";
 import commonHeaders from "@/lib/commonHeaders";
 
 export async function POST(req: NextRequest) {
-  const { json } = req;
-  const { body } = await json();
-  console.log("body: ", body);
+  const body = await req.json();
+  console.log(body["jobApplication"].trim());
   createJobApplication(body);
   const { json: jsonResponse } = NextResponse;
   return jsonResponse(

@@ -1,39 +1,75 @@
 import fs from "fs";
-import { promisify } from "util";
-import { JobApplicationsType } from "./jobApplicationInterfaces";
+import csvParser from "csv-parser";
+import { createObjectCsvWriter } from "csv-writer";
+import {
+  JobApplication,
+  JobApplicationsType,
+} from "./jobApplicationInterfaces";
 
-const readFile = promisify(fs.readFile);
-const writeFile = promisify(fs.writeFile);
-
-async function loadApplicationsFromCSV(): Promise<JobApplicationsType> {
-  try {
-    if (!process.env.CSV_FILE_PATH) {
-      throw new Error("CSV file path not defined");
-    }
-    const csvData = await readFile(process.env.CSV_FILE_PATH, "utf-8");
-    const applicationIds = csvData.split("\n").map((line) => line.trim());
-    const applications: JobApplicationsType = applicationIds.map((id) => ({
-      applicationId: id,
-    }));
-    return applications;
-  } catch (error) {
-    console.error("Error loading CSV:", error);
-    throw error;
+async function loadApplicationsFromCSV(): Promise<JobApplication[]> {
+  if (!process.env.CSV_FILE_PATH) {
+    throw new Error("CSV file path not defined");
   }
+
+  const applications: JobApplication[] = [];
+
+  const stream = fs
+    .createReadStream(process.env.CSV_FILE_PATH)
+    .pipe(csvParser());
+
+  for await (const row of stream) {
+    applications.push(row);
+  }
+
+  return applications;
 }
 
 async function updateCSVFile(applications: JobApplicationsType): Promise<void> {
-  try {
-    if (!process.env.CSV_FILE_PATH) {
-      throw new Error("CSV file path not defined");
-    }
-    const applicationIds = applications.map((app) => app.applicationId);
-    const csvData = applicationIds.join("\n");
-    await writeFile(process.env.CSV_FILE_PATH, csvData, "utf-8");
-  } catch (error) {
-    console.error("Error updating CSV:", error);
-    throw error;
+  if (!process.env.CSV_FILE_PATH) {
+    throw new Error("CSV file path not defined");
   }
+
+  const csvWriter = createObjectCsvWriter({
+    path: process.env.CSV_FILE_PATH,
+    header: [
+      { id: "company", title: "Company" },
+      { id: "jobTitle", title: "Job Title" },
+      { id: "applicationDate", title: "Date of Application" },
+      { id: "contactPerson", title: "Contact Person" },
+      { id: "status", title: "Status" },
+      { id: "notes", title: "Notes" },
+    ],
+  });
+
+  const csvData = applications.map((application: JobApplication) => {
+    return {
+      company: application.Company,
+      jobTitle: application["Job Title"],
+      applicationDate: application["Date of Application"],
+      contactPerson: application["Contact Person"] || "Not provided",
+      status: application.Status,
+      notes: application.Notes,
+    };
+  });
+
+  await csvWriter.writeRecords(csvData);
+  console.log("CSV file updated");
+}
+async function addJobApplicationToCSV(
+  jobApplicationString: string
+): Promise<void> {
+  const applications = await loadApplicationsFromCSV();
+  const parsedApplication: JobApplication = {};
+  const lines = jobApplicationString.split("\n");
+  for (const line of lines) {
+    const [key, value] = line.split(":").map((str) => str.trim());
+    if (key && value) {
+      parsedApplication[key] = value;
+    }
+  }
+
+  applications.push(parsedApplication);
+  await updateCSVFile(applications);
 }
 
-export { loadApplicationsFromCSV, updateCSVFile };
+export { loadApplicationsFromCSV, updateCSVFile, addJobApplicationToCSV };

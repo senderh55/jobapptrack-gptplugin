@@ -4,7 +4,6 @@ import commonHeaders from "@/lib/commonHeaders";
 
 export async function DELETE(req: NextRequest) {
   const body = await req.json();
-  console.log("body: ", body);
   deleteJobApplication(body);
   return NextResponse.json(
     { success: true },

@@ -2,10 +2,14 @@ import {
   JobApplication,
   JobApplicationsType,
 } from "./jobApplicationInterfaces";
-import { loadApplicationsFromCSV, updateCSVFile } from "./csvUtils";
+import {
+  loadApplicationsFromCSV,
+  updateCSVFile,
+  addJobApplicationToCSV,
+} from "./csvUtils";
 
 let jobApplications: JobApplicationsType = [];
-// FIXME
+
 async function loadJobApplications() {
   try {
     jobApplications = await loadApplicationsFromCSV();
@@ -16,18 +20,7 @@ async function loadJobApplications() {
 }
 
 async function createJobApplication(application: JobApplication) {
-  jobApplications.push(application);
-  await updateCSVFile(jobApplications);
-}
-
-function editJobApplication(application: JobApplication) {
-  const index = jobApplications.findIndex(
-    (item) => item.applicationId === application.applicationId
-  );
-  if (index !== -1) {
-    jobApplications[index] = application;
-    updateCSVFile(jobApplications);
-  }
+  await addJobApplicationToCSV(application["jobApplication"].trim());
 }
 
 function deleteJobApplication(application: JobApplication) {
@@ -40,9 +33,4 @@ function deleteJobApplication(application: JobApplication) {
   }
 }
 
-export {
-  loadJobApplications,
-  createJobApplication,
-  editJobApplication,
-  deleteJobApplication,
-};
+export { loadJobApplications, createJobApplication, deleteJobApplication };
