@@ -97,6 +97,7 @@ async function editJobApplicationByCompany(
         ? { ...application, ...newData }
         : application
     );
+    console.log(editedApplications);
     await updateCSVFile(editedApplications);
     console.log(`Job application for '${companyName}' edited successfully`);
   } catch (error) {

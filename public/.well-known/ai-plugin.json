@@ -3,7 +3,7 @@
   "name_for_human": "Job Application Tracker",
   "name_for_model": "jobapptracker",
   "description_for_human": "Track and manage job applications. Add, update,delete and view job applications.",
-  "description_for_model": "Add, update, delete, and view job applications. From the job description, the following categories will be extracted, each in different line: the name of the company, the job title, the date of the application (todays date), the contact person with phone number or linkedin link, the status (submitted if not indicated otherwise), and the notes. Each row will be saved to the CSV file and the results will be displayed in a table. If some categories aren't provided, let the user know.",
+  "description_for_model": "From job description,extract information into six categories: company, job title, date of application(todays date), contact information, status(submitted as default) and notes. elaborate in each categories",
   "auth": {
     "type": "none"
   },
