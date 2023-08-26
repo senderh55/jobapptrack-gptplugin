@@ -1,10 +1,10 @@
 import { NextResponse, NextRequest } from "next/server";
-//import { editJobApplication } from "@/lib/jobApplicationUtils";
+import { editJobApplication } from "@/lib/jobApplicationUtils";
 import commonHeaders from "@/lib/commonHeaders";
 
-export async function PUT(req: NextRequest) {
+export async function POST(req: NextRequest) {
   const body = await req.json();
-  //editJobApplication(body["jobApplication"].trim());
+  editJobApplication(body);
   return NextResponse.json(
     { success: true },
     {

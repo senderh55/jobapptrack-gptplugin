@@ -67,9 +67,47 @@ async function addJobApplicationToCSV(
       parsedApplication[key] = value;
     }
   }
-
   applications.push(parsedApplication);
   await updateCSVFile(applications);
 }
 
-export { loadApplicationsFromCSV, updateCSVFile, addJobApplicationToCSV };
+async function deleteJobApplicationByCompany(
+  companyName: string
+): Promise<void> {
+  try {
+    const applications = await loadApplicationsFromCSV();
+    const filteredApplications = applications.filter(
+      (application) => application.Company !== companyName
+    );
+    await updateCSVFile(filteredApplications);
+    console.log(`Job applications for '${companyName}' deleted successfully`);
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function editJobApplicationByCompany(
+  companyName: string,
+  newData: JobApplication
+): Promise<void> {
+  try {
+    const applications = await loadApplicationsFromCSV();
+    const editedApplications = applications.map((application) =>
+      application.Company === companyName
+        ? { ...application, ...newData }
+        : application
+    );
+    await updateCSVFile(editedApplications);
+    console.log(`Job application for '${companyName}' edited successfully`);
+  } catch (error) {
+    throw error;
+  }
+}
+
+export {
+  loadApplicationsFromCSV,
+  updateCSVFile,
+  addJobApplicationToCSV,
+  deleteJobApplicationByCompany,
+  editJobApplicationByCompany,
+};

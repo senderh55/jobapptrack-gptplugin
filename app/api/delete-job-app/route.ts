@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { deleteJobApplication } from "@/lib/jobApplicationUtils";
 import commonHeaders from "@/lib/commonHeaders";
 
-export async function DELETE(req: NextRequest) {
+export async function POST(req: NextRequest) {
   const body = await req.json();
   deleteJobApplication(body);
   return NextResponse.json(
