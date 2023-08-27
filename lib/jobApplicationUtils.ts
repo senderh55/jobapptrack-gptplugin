@@ -21,13 +21,12 @@ async function deleteJobApplication(application: JobApplication) {
   if (companyName) {
     await deleteJobApplicationByCompany(companyName);
   } else {
-    console.log("Company name not found");
+    ("Company name not found");
   }
 }
 
 async function editJobApplication(application: JobApplication) {
   const companyName = extractCompanyName(application);
-  console.log(companyName);
   if (companyName) {
     await deleteJobApplicationByCompany(companyName);
     await addJobApplicationToCSV(application["jobApplication"].trim());

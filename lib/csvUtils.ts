@@ -21,8 +21,6 @@ async function loadApplicationsFromCSV(): Promise<JobApplication[]> {
         applications.push(row);
       })
       .on("end", () => {
-        console.log(applications);
-        console.log(resolve(applications));
         resolve(applications);
       })
       .on("error", (error) => {
