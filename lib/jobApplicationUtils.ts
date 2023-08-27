@@ -1,14 +1,8 @@
+import { JobApplication } from "./jobApplicationInterfaces";
 import {
-  JobApplication,
-  JobApplicationsType,
-} from "./jobApplicationInterfaces";
-import {
-  loadApplicationsFromCSV,
   deleteJobApplicationByCompany,
   addJobApplicationToCSV,
 } from "./csvUtils";
-
-let jobApplications: JobApplicationsType = [];
 
 function extractCompanyName(application: JobApplication): string | null {
   const match = application.jobApplication.match(/Company: (.+?)(\n|$)/);
@@ -16,15 +10,6 @@ function extractCompanyName(application: JobApplication): string | null {
     return match[1];
   }
   return null;
-}
-
-async function loadJobApplications() {
-  try {
-    jobApplications = await loadApplicationsFromCSV();
-  } catch (error) {
-    console.error("Error loading job applications:", error);
-    throw error;
-  }
 }
 
 async function createJobApplication(application: JobApplication) {
@@ -42,6 +27,7 @@ async function deleteJobApplication(application: JobApplication) {
 
 async function editJobApplication(application: JobApplication) {
   const companyName = extractCompanyName(application);
+  console.log(companyName);
   if (companyName) {
     await deleteJobApplicationByCompany(companyName);
     await addJobApplicationToCSV(application["jobApplication"].trim());
@@ -50,9 +36,4 @@ async function editJobApplication(application: JobApplication) {
   }
 }
 
-export {
-  loadJobApplications,
-  createJobApplication,
-  deleteJobApplication,
-  editJobApplication,
-};
+export { createJobApplication, deleteJobApplication, editJobApplication };

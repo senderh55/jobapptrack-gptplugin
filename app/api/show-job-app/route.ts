@@ -1,14 +1,21 @@
 import { NextResponse } from "next/server";
-import { loadJobApplications } from "@/lib/jobApplicationUtils";
+import { loadApplicationsFromCSV } from "@/lib/csvUtils";
 import commonHeaders from "@/lib/commonHeaders";
-
-// FIXME
 export const GET = async () => {
   try {
-    // Load job applications from CSV
-    const applications = await loadJobApplications();
+    const rawApplications = await loadApplicationsFromCSV();
+    const applications = rawApplications.map((application) => {
+      console.log(application);
+      return {
+        company: application.Company,
+        jobTitle: application["Job Title"],
+        applicationDate: application["Date of Application"],
+        contactPerson: application["Contact Person"] || "Not provided",
+        status: application.Status,
+        notes: application.Notes,
+      };
+    });
 
-    // Return the job applications
     return NextResponse.json(
       {
         applications,

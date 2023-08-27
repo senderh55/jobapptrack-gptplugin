@@ -10,18 +10,26 @@ async function loadApplicationsFromCSV(): Promise<JobApplication[]> {
   if (!process.env.CSV_FILE_PATH) {
     throw new Error("CSV file path not defined");
   }
+  const path = process.env.CSV_FILE_PATH;
+  return new Promise((resolve, reject) => {
+    const applications: JobApplication[] = [];
 
-  const applications: JobApplication[] = [];
-
-  const stream = fs
-    .createReadStream(process.env.CSV_FILE_PATH)
-    .pipe(csvParser());
-
-  for await (const row of stream) {
-    applications.push(row);
-  }
-
-  return applications;
+    const stream = fs
+      .createReadStream(path)
+      .pipe(csvParser())
+      .on("data", (row) => {
+        applications.push(row);
+      })
+      .on("end", () => {
+        console.log(applications);
+        console.log(resolve(applications));
+        resolve(applications);
+      })
+      .on("error", (error) => {
+        reject(error);
+      });
+    return applications;
+  });
 }
 
 async function updateCSVFile(applications: JobApplicationsType): Promise<void> {
