@@ -6,7 +6,7 @@
 
 ## Overview
 
-The ChatGPT Plugin for Job Application Tracker is a TypeScript and Next.js based solution designed to simplify the process of tracking job applications. The plugin leverages the capabilities of ChatGPT to generate summaries of job applications and integrates with CSV files to manage application data efficiently.
+The JobAppTrack ChatGPT Plugin for Job Application Tracker is a TypeScript and Next.js based solution designed to simplify the process of tracking job applications. The plugin leverages the capabilities of ChatGPT to generate summaries of job applications and integrates with CSV files to manage application data efficiently.
 
 ## Features
 
