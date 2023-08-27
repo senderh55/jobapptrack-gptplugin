@@ -1,10 +1,8 @@
+# ChatGPT Plugin for Job Application Tracker
+
 <div align="center">
   <img src="public/logo.png" alt="Logo">
 </div>
-
-# ChatGPT Plugin for Job Application Tracker
-
-![Project Banner](link-to-your-banner-image)
 
 ## Overview
 
@@ -47,10 +45,5 @@ The ChatGPT Plugin for Job Application Tracker is a TypeScript and Next.js based
 
 ## Usage
 
-Upload CSV Data: Upload your job application data in CSV format using the plugin interface.
-Interaction: Use the plugin to view application summaries, update statuses, and keep track of interview processes.
-API Endpoints
-POST /api/add-job-application: Add a new job application.
-POST /api/delete-job-application: Delete a job application by company name.
-POST /api/edit-job-application: Edit a job application.
-GET /api/get-job-applications: Retrieve all job applications.
+- **Upload CSV Data:** Upload your job application data in CSV format using the plugin interface.
+- **Interaction:** Use the plugin to view application summaries, update statuses, and keep track of interview processes.
